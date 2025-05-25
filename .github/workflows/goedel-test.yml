@@ -15,9 +15,10 @@ jobs:
       - name: Creating SBOM
         uses: anchore/sbom-action@v0
         with:
-          file: ./test_project/Cargo.lock
-          output-file: ./sbom.cdx.json
-          format: cyclonedx-json
+          file: './test_project/Cargo.lock'
+          output-file: './sbom.cdx.json'
+          format: 'cyclonedx-json'
+          upload-artifact: 'false'
 
       - name: Setting up BOMnipotent Client
         id: setup-latest
