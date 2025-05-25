@@ -13,13 +13,25 @@ while [[ $# -gt 0 ]]; do
             name="$2"
             shift 2
             ;;
+        --name=*)
+            name="${1#*=}"
+            shift
+            ;;
         -v|--version)
             version="$2"
             shift 2
             ;;
+        --version=*)
+            version="${1#*=}"
+            shift
+            ;;
         -t|--tlp)
             tlp="$2"
             shift 2
+            ;;
+        --tlp=*)
+            tlp="${1#*=}"
+            shift
             ;;
         --)
             shift
