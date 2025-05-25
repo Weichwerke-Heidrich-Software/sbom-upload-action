@@ -32,10 +32,11 @@ jobs:
         uses: Weichwerke-Heidrich-Software/upload-bom-action@name-and-version
         with:
           bom: './sbom.cdx.json'
-          name: 'Test SBOM'
+          name: 'sbom-upload-action-test-project'
           version: '1.0.0-${{ matrix.os }}'
+          tlp: 'white'
 
-      - name: Cleanup
+      - name: Cleanup (delete freshly uploaded SBOM \#sad \#nothinglastsforever)
         run: |
-          bomnipotent_client bom delete 'Test SBOM' '1.0.0-${{ matrix.os }}'
+          bomnipotent_client bom delete 'sbom-upload-action-test-project' '1.0.0-${{ matrix.os }}'
         shell: bash

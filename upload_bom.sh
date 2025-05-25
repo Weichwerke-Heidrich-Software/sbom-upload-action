@@ -1,8 +1,41 @@
 #!/bin/bash
 
-set -eo pipefail
+set -eou pipefail
 
-bom_file="$1"
+name=""
+version=""
+tlp=""
+
+# Parse options
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -n|--name)
+            name="$2"
+            shift 2
+            ;;
+        -v|--version)
+            version="$2"
+            shift 2
+            ;;
+        -t|--tlp)
+            tlp="$2"
+            shift 2
+            ;;
+        --)
+            shift
+            break
+            ;;
+        -*)
+            echo "Unknown option: $1"
+            exit 1
+            ;;
+        *)
+            bom_file="$1"
+            shift
+            ;;
+    esac
+done
+
 if [ -z "$bom_file" ]; then
     echo "Error: BOM file path is required."
     exit 1
@@ -19,4 +52,9 @@ if ! command -v $bomnipotent_command &> /dev/null; then
     exit 1
 fi
 
-"$bomnipotent_command" bom upload $bom_file
+args=(bom upload "$bom_file")
+[ -n "$name" ] && args+=(--name-overwrite "$name")
+[ -n "$version" ] && args+=(--version-overwrite "$version")
+[ -n "$tlp" ] && args+=(--tlp "$tlp")
+
+"$bomnipotent_command" "${args[@]}"
