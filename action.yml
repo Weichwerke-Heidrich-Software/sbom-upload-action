@@ -19,6 +19,12 @@ inputs:
     description: |-
       The Traffic Light Protocol (TLP) level of the BOM.
     required: false
+  on-existing:
+    description: |-
+      What to do if a BOM with the same name and version already exists on the server.
+      Options are: 'error' (default behaviour), 'skip' or 'replace'.
+    required: false
+    default: 'error'
 runs:
   using: "composite"
   steps:
@@ -30,6 +36,12 @@ runs:
         fi
         if [ -n "${{ inputs.version }}" ]; then
           args+=("--version=${{ inputs.version }}")
+        fi
+        if [ -n "${{ inputs.tlp }}" ]; then
+          args+=("--tlp=${{ inputs.tlp }}")
+        fi
+        if [ -n "${{ inputs.on-existing }}" ]; then
+          args+=("--on-existing=${{ inputs.on-existing }}")
         fi
         ./upload_bom.sh "${{ inputs.bom }}" "${args[@]}"
       shell: bash

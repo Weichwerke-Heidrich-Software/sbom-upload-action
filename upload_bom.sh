@@ -5,6 +5,7 @@ set -eou pipefail
 name=""
 version=""
 tlp=""
+on_existing="error"
 
 # Parse options
 while [[ $# -gt 0 ]]; do
@@ -31,6 +32,14 @@ while [[ $# -gt 0 ]]; do
             ;;
         --tlp=*)
             tlp="${1#*=}"
+            shift
+            ;;
+        --on-existing)
+            on_existing="$2"
+            shift 2
+            ;;
+        --on-existing=*)
+            on_existing="${1#*=}"
             shift
             ;;
         --)
@@ -63,6 +72,29 @@ if ! command -v $bomnipotent_command &> /dev/null; then
     echo "https://github.com/marketplace/actions/setup-bomnipotent-client"
     exit 1
 fi
+
+already_exists=0
+if [ "$on_existing" != "error" ]; then
+    if [ -n "$name" ] && [ -n "$version" ]; then
+        code=$("$bomnipotent_command" --output-mode code bom get "$name" "$version")
+        already_exists=$([ "$code" = "200" ] && echo 1 || echo 0)
+    else
+        echo "Warning: --on-existing handling currently requires --name and --version to be set."
+        echo "Weichwerke Heidrich Software is working on a cleaner solution."
+    fi
+fi
+if [ "$already_exists" -eq 1 ]; then
+    if [ "$on_existing" == "skip" ]; then
+        echo "Skipping upload: BOM with name '$name' and version '$version' already exists."
+        exit 0
+    elif [ "$on_existing" == "replace" ]; then
+        "$bomnipotent_command" bom delete "$name" "$version"
+    else
+        echo "Error: BOM with name '$name' and version '$version' already exists."
+        exit 1
+    fi
+fi
+
 
 args=(bom upload "$bom_file")
 [ -n "$name" ] && args+=(--name-overwrite "$name")
