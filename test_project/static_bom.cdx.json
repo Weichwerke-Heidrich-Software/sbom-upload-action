@@ -2,17 +2,17 @@
     "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
     "bomFormat": "CycloneDX",
     "specVersion": "1.6",
-    "serialNumber": "urn:uuid:f634fa58-ccf0-4721-98ae-0a47e9198d00",
+    "serialNumber": "urn:uuid:f4c1711b-927c-4c1b-8188-35e720fd6120",
     "version": 1,
     "metadata": {
-        "timestamp": "2025-05-25T13:59:15+02:00",
+        "timestamp": "2025-05-25T14:11:31+02:00",
         "tools": {
             "components": [
                 {
                     "type": "application",
                     "author": "anchore",
                     "name": "syft",
-                    "version": "1.19.0"
+                    "version": "1.26.1"
                 }
             ]
         },
@@ -3959,6 +3959,21 @@
                 {
                     "name": "syft:location:0:path",
                     "value": "/Cargo.lock"
+                }
+            ]
+        },
+        {
+            "bom-ref": "c6bea2c24af05bc1",
+            "type": "file",
+            "name": "/home/simon/git/sbom-upload-action/test_project/Cargo.lock",
+            "hashes": [
+                {
+                    "alg": "SHA-1",
+                    "content": "26aa5f513eefb36aecad72be71ca3d7321b8cda3"
+                },
+                {
+                    "alg": "SHA-256",
+                    "content": "ac10e0f39caaf732e5a0f7682c0cc6242fe2b69929728371d19498c74810aef8"
                 }
             ]
         }
