@@ -12,8 +12,7 @@ runs:
   steps:
     - name: Upload BOM
       run: |
-        ls -al
-        upload_bom.sh ${{ inputs.bom }}
+        ./upload_bom.sh ${{ inputs.bom }}
       shell: bash
 branding:
   icon: 'triangle'
