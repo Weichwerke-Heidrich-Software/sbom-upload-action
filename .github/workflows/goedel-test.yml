@@ -29,7 +29,7 @@ jobs:
           secret_key: ${{ secrets.CLIENT_SECRET_KEY }}
 
       - name: Uploading SBOM
-        uses: Weichwerke-Heidrich-Software/upload-bom-action@upload-functionality
+        uses: Weichwerke-Heidrich-Software/upload-bom-action@v0
         with:
           bom: './sbom.cdx.json'
 
