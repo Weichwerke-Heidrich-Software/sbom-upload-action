@@ -19,6 +19,12 @@ inputs:
     description: |-
       The Traffic Light Protocol (TLP) level of the BOM.
     required: false
+  on-existing:
+    description: |-
+      What to do if a BOM with the same name and version already exists on the server.
+      Options are: 'error' (default behaviour), 'skip' or 'replace'.
+    required: false
+    default: 'error'
 runs:
   using: "composite"
   steps:

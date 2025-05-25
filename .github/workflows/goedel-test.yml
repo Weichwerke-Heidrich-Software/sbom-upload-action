@@ -26,15 +26,34 @@ jobs:
         with:
           domain: 'https://bomnipotent.wwh-soft.com'
           user: 'wwh_soft_robot'
-          secret_key: ${{ secrets.CLIENT_SECRET_KEY }}
+          secret-key: ${{ secrets.CLIENT_SECRET_KEY }}
+          log-level: 'debug'
 
       - name: Uploading SBOM
-        uses: Weichwerke-Heidrich-Software/upload-bom-action@v0
+        uses: Weichwerke-Heidrich-Software/upload-bom-action@conflict-handling
         with:
           bom: './sbom.cdx.json'
           name: 'sbom-upload-action-test-project'
           version: '1.0.0-${{ matrix.os }}'
           tlp: 'white'
+
+      - name: Trying to uploade same SBOM again
+        uses: Weichwerke-Heidrich-Software/upload-bom-action@conflict-handling
+        with:
+          bom: './sbom.cdx.json'
+          name: 'sbom-upload-action-test-project'
+          version: '1.0.0-${{ matrix.os }}'
+          tlp: 'white'
+          on-existing: 'skip'
+
+      - name: Replacing SBOM
+        uses: Weichwerke-Heidrich-Software/upload-bom-action@conflict-handling
+        with:
+          bom: './test_project/static_bom.cdx.json' # Checked into this repo.
+          name: 'sbom-upload-action-test-project'
+          version: '1.0.0-${{ matrix.os }}'
+          tlp: 'white'
+          on-existing: 'replace'
 
       - name: Cleanup (delete freshly uploaded SBOM #sad #nothinglastsforever)
         run: |
