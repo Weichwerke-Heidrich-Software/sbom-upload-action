@@ -30,4 +30,5 @@ jobs:
 
       - name: Uploading SBOM
         uses: Weichwerke-Heidrich-Software/upload-sbom-action@initial-pipeline-functionality
-        bom: './sbom.cdx.json'
+        with:
+          bom: './sbom.cdx.json'
