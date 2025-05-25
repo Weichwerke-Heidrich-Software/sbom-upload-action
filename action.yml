@@ -37,6 +37,12 @@ runs:
         if [ -n "${{ inputs.version }}" ]; then
           args+=("--version=${{ inputs.version }}")
         fi
+        if [ -n "${{ inputs.tlp }}" ]; then
+          args+=("--tlp=${{ inputs.tlp }}")
+        fi
+        if [ -n "${{ inputs.on-existing }}" ]; then
+          args+=("--on-existing=${{ inputs.on-existing }}")
+        fi
         ./upload_bom.sh "${{ inputs.bom }}" "${args[@]}"
       shell: bash
 branding:
