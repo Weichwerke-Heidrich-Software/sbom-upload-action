@@ -32,3 +32,9 @@ jobs:
         uses: Weichwerke-Heidrich-Software/upload-bom-action@upload-functionality
         with:
           bom: './sbom.cdx.json'
+
+      - name: Cleanup
+        run: |
+          chmod +x ./delete_bom.sh
+          ./delete_bom.sh ./sbom.cdx.json
+        shell: bash

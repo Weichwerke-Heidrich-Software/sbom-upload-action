@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -eo pipefail
 
 bom_file="$1"
 if [ -z "$bom_file" ]; then
@@ -18,3 +18,5 @@ if ! command -v $bomnipotent_command &> /dev/null; then
     echo "https://github.com/marketplace/actions/setup-bomnipotent-client"
     exit 1
 fi
+
+"$bomnipotent_command" bom upload $bom_file
