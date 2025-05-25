@@ -11,7 +11,9 @@ runs:
   using: "composite"
   steps:
     - name: Upload BOM
-      run: upload_bom.sh ${{ inputs.bom }}
+      run: |
+        ls -al
+        upload_bom.sh ${{ inputs.bom }}
       shell: bash
 branding:
   icon: 'triangle'
