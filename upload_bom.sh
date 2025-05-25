@@ -2,9 +2,9 @@
 
 set -e
 
-sbom_file="$1"
-if [ -z "$sbom_file" ]; then
-    echo "Error: SBOM file path is required."
+bom_file="$1"
+if [ -z "$bom_file" ]; then
+    echo "Error: BOM file path is required."
     exit 1
 fi
 
