@@ -1,0 +1,37 @@
+on: [push]
+
+jobs:
+  test-action:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    name: Creating and uploading Test SBOM.
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Creating SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          file: './test_project/Cargo.lock'
+          output-file: './sbom.cdx.json'
+          format: 'cyclonedx-json'
+          upload-artifact: 'false'
+
+      - name: Setting up BOMnipotent Client
+        id: setup-latest
+        uses: Weichwerke-Heidrich-Software/setup-bomnipotent-action@v1
+        with:
+          domain: 'https://bomnipotent.wwh-soft.com'
+          user: 'wwh_soft_robot'
+          secret_key: ${{ secrets.CLIENT_SECRET_KEY }}
+
+      - name: Display SBOM
+        run: |
+          echo "SBOM content:"
+          head -c 100 ./sbom.cdx.json
+
+      # - name: Uploading SBOM
+      #   uses: Weichwerke-Heidrich-Software/upload-sbom-action@example-bom
