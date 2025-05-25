@@ -1,10 +1,10 @@
 #!/bin/bash
 
-set -e
+set -eo pipefail
 
-sbom_file="$1"
-if [ -z "$sbom_file" ]; then
-    echo "Error: SBOM file path is required."
+bom_file="$1"
+if [ -z "$bom_file" ]; then
+    echo "Error: BOM file path is required."
     exit 1
 fi
 
@@ -18,3 +18,5 @@ if ! command -v $bomnipotent_command &> /dev/null; then
     echo "https://github.com/marketplace/actions/setup-bomnipotent-client"
     exit 1
 fi
+
+"$bomnipotent_command" bom upload $bom_file
