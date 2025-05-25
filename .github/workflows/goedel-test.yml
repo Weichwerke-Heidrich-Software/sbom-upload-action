@@ -28,10 +28,6 @@ jobs:
           user: 'wwh_soft_robot'
           secret_key: ${{ secrets.CLIENT_SECRET_KEY }}
 
-      - name: Display SBOM
-        run: |
-          echo "SBOM content:"
-          head -c 100 ./sbom.cdx.json
-
-      # - name: Uploading SBOM
-      #   uses: Weichwerke-Heidrich-Software/upload-sbom-action@example-bom
+      - name: Uploading SBOM
+        uses: Weichwerke-Heidrich-Software/upload-sbom-action@initial-pipeline-functionality
+        bom: './sbom.cdx.json'
