@@ -29,12 +29,13 @@ jobs:
           secret_key: ${{ secrets.CLIENT_SECRET_KEY }}
 
       - name: Uploading SBOM
-        uses: Weichwerke-Heidrich-Software/upload-bom-action@v0
+        uses: Weichwerke-Heidrich-Software/upload-bom-action@name-and-version
         with:
           bom: './sbom.cdx.json'
+          name: 'Test SBOM'
+          version: '1.0.0-${{ matrix.os }}'
 
       - name: Cleanup
         run: |
-          chmod +x ./delete_bom.sh
-          ./delete_bom.sh ./sbom.cdx.json
+          bomnipotent_client bom delete 'Test SBOM' '1.0.0-${{ matrix.os }}'
         shell: bash
