@@ -30,7 +30,7 @@ jobs:
           log-level: 'debug'
 
       - name: Uploading SBOM
-        uses: Weichwerke-Heidrich-Software/upload-bom-action@conflict-handling
+        uses: Weichwerke-Heidrich-Software/upload-bom-action@v0
         with:
           bom: './sbom.cdx.json'
           name: 'sbom-upload-action-test-project'
@@ -38,7 +38,7 @@ jobs:
           tlp: 'white'
 
       - name: Trying to uploade same SBOM again
-        uses: Weichwerke-Heidrich-Software/upload-bom-action@conflict-handling
+        uses: Weichwerke-Heidrich-Software/upload-bom-action@v0
         with:
           bom: './sbom.cdx.json'
           name: 'sbom-upload-action-test-project'
@@ -47,7 +47,7 @@ jobs:
           on-existing: 'skip'
 
       - name: Replacing SBOM
-        uses: Weichwerke-Heidrich-Software/upload-bom-action@conflict-handling
+        uses: Weichwerke-Heidrich-Software/upload-bom-action@v0
         with:
           bom: './test_project/static_bom.cdx.json' # Checked into this repo.
           name: 'sbom-upload-action-test-project'
