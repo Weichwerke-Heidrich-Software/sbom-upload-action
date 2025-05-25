@@ -38,6 +38,10 @@ while [[ $# -gt 0 ]]; do
             on_existing="$2"
             shift 2
             ;;
+        --on-existing=*)
+            on_existing="${1#*=}"
+            shift
+            ;;
         --)
             shift
             break
