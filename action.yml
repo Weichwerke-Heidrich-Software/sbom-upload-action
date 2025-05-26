@@ -10,10 +10,12 @@ inputs:
   name:
     description: |-
       Overwrite the name of the BOM to upload.
+      Can be either a string literal, or a path to a file containing the value.
     required: false
   version:
     description: |-
       Overwrite the version of the BOM to upload.
+      Can be either a string literal, or a path to a file containing the value.
     required: false
   tlp:
     description: |-
