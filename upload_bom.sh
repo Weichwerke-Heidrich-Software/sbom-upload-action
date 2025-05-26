@@ -73,6 +73,15 @@ if ! command -v $bomnipotent_command &> /dev/null; then
     exit 1
 fi
 
+if [ -f "$name" ]; then
+    echo "Reading BOM name from file: $name"
+    name=$(head -n 1 "$name" | head -c 256)
+fi
+if [ -f "$version" ]; then
+    echo "Reading BOM version from file: $version"
+    version=$(head -n 1 "$version" | head -c 256)
+fi
+
 already_exists=0
 if [ "$on_existing" != "error" ]; then
     if [ -n "$name" ] && [ -n "$version" ]; then
