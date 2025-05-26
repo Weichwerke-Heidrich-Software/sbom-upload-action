@@ -14,7 +14,7 @@ jobs:
 
       - name: Generate unique version file (to avoid conflicts with other runs)
         run: |
-          echo "${{ github.run_id }}" > ./version_plus_os.txt
+          echo "$${{ matrix.os }}-{{ github.run_id }}" > ./unique_version.txt
         shell: bash
 
       - name: Creating SBOM
@@ -39,7 +39,7 @@ jobs:
         with:
           bom: './sbom.cdx.json'
           name: '${{ github.event.repository.name }}-test-project'
-          version: './version_plus_os.txt'
+          version: './unique_version.txt'
           tlp: 'white'
           on-existing: 'replace' # Mainly to catch the case where a previous test run failed mid-way.
 
@@ -48,7 +48,7 @@ jobs:
         with:
           bom: './sbom.cdx.json'
           name: '${{ github.event.repository.name }}-test-project'
-          version: './version_plus_os.txt'
+          version: './unique_version.txt'
           tlp: 'white'
           on-existing: 'skip'
 
@@ -57,11 +57,11 @@ jobs:
         with:
           bom: './test_project/static_bom.cdx.json' # Checked into this repo.
           name: '${{ github.event.repository.name }}-test-project'
-          version: './version_plus_os.txt'
+          version: './unique_version.txt'
           tlp: 'white'
           on-existing: 'replace'
 
       - name: Cleanup (delete freshly uploaded SBOM)
         run: |
-          bomnipotent_client bom delete '${{ github.event.repository.name }}-test-project' "$(cat ./version_plus_os.txt)"
+          bomnipotent_client bom delete '${{ github.event.repository.name }}-test-project' "$(cat ./unique_version.txt)"
         shell: bash
