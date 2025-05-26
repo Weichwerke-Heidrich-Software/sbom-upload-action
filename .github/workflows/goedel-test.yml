@@ -15,7 +15,7 @@ jobs:
       - name: Add OS to version file
         run: |
           echo "This is merely to avoid conflicts with other, parallel runs of this workflow."
-          sed -z 's/\s*$//' ./version.txt > ./version_plus_os.txt
+          printf "%s" "$(cat ./version.txt)" > ./version_plus_os.txt
           echo "-${{ matrix.os }}" >> ./version_plus_os.txt
         shell: bash
 
@@ -63,7 +63,7 @@ jobs:
           tlp: 'white'
           on-existing: 'replace'
 
-      - name: Cleanup (delete freshly uploaded SBOM #sad #nothinglastsforever)
+      - name: Cleanup (delete freshly uploaded SBOM)
         run: |
           bomnipotent_client bom delete '${{ github.event.repository.name }}-test-project' "$(cat ./version_plus_os.txt)"
         shell: bash
