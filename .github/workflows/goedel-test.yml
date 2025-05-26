@@ -12,11 +12,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Add OS to version file
+      - name: Generate unique version file (to avoid conflicts with other runs)
         run: |
-          echo "This is merely to avoid conflicts with other, parallel runs of this workflow."
-          printf "%s" "$(cat ./version.txt)" > ./version_plus_os.txt
-          echo "-${{ matrix.os }}" >> ./version_plus_os.txt
+          echo "${{ github.run_id }}" > ./version_plus_os.txt
         shell: bash
 
       - name: Creating SBOM
