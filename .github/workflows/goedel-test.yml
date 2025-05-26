@@ -37,7 +37,7 @@ jobs:
           log-level: 'debug'
 
       - name: Uploading SBOM
-        uses: Weichwerke-Heidrich-Software/upload-bom-action@v0
+        uses: Weichwerke-Heidrich-Software/upload-bom-action@fix-portability
         with:
           bom: './sbom.cdx.json'
           name: '${{ github.event.repository.name }}-test-project'
@@ -46,7 +46,7 @@ jobs:
           on-existing: 'replace' # Mainly to catch the case where a previous test run failed mid-way.
 
       - name: Trying to upload same SBOM again
-        uses: Weichwerke-Heidrich-Software/upload-bom-action@v0
+        uses: Weichwerke-Heidrich-Software/upload-bom-action@fix-portability
         with:
           bom: './sbom.cdx.json'
           name: '${{ github.event.repository.name }}-test-project'
@@ -55,7 +55,7 @@ jobs:
           on-existing: 'skip'
 
       - name: Replacing SBOM
-        uses: Weichwerke-Heidrich-Software/upload-bom-action@v0
+        uses: Weichwerke-Heidrich-Software/upload-bom-action@fix-portability
         with:
           bom: './test_project/static_bom.cdx.json' # Checked into this repo.
           name: '${{ github.event.repository.name }}-test-project'
