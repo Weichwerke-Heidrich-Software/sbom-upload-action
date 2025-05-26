@@ -30,6 +30,12 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Set GitHub Path
+      run: echo "$GITHUB_ACTION_PATH" >> $GITHUB_PATH
+      shell: bash
+      env:
+        GITHUB_ACTION_PATH: ${{ github.action_path }}
+
     - name: Upload BOM
       run: |
         args=()
@@ -45,7 +51,7 @@ runs:
         if [ -n "${{ inputs.on-existing }}" ]; then
           args+=("--on-existing=${{ inputs.on-existing }}")
         fi
-        ./upload_bom.sh "${{ inputs.bom }}" "${args[@]}"
+        upload_bom.sh "${{ inputs.bom }}" "${args[@]}"
       shell: bash
 branding:
   icon: 'triangle'
