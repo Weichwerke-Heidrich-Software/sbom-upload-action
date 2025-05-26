@@ -15,6 +15,8 @@ jobs:
       - name: Generate unique version file (to avoid conflicts with other runs)
         run: |
           echo "$${{ matrix.os }}-{{ github.run_id }}" > ./unique_version.txt
+          echo "Generated version:"
+          cat ./unique_version.txt
         shell: bash
 
       - name: Creating SBOM

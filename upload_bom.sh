@@ -111,5 +111,5 @@ args=(bom upload "$bom_file")
 [ -n "$version" ] && args+=(--version-overwrite "$version")
 [ -n "$tlp" ] && args+=(--tlp "$tlp")
 
-echo "Uploading BOM file: $bom_file"
+echo "Uploading BOM file $bom_file with args ${args[*]}"
 "$bomnipotent_command" "${args[@]}"
