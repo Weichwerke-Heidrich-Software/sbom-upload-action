@@ -24,8 +24,8 @@ This action requires `bomnipotent_client` or `bomnipotent_client.exe` to be avai
 ### Inputs
 
 - `bom`: The filepath to the Bill of Materials (BOM) file to upload.
-- `name`: *(Optional)* Overwrite the name of the BOM to upload.
-- `version`: *(Optional)* Overwrite the version of the BOM to upload.
+- `name`: *(Optional)* Overwrite the name of the BOM to upload. Can be either a string literal, or a path to a file containing the value.
+- `version`: *(Optional)* Overwrite the version of the BOM to upload. Can be either a string literal, or a path to a file containing the value.
 - `tlp`: *(Optional)* The Traffic Light Protocol (TLP) level of the BOM.
 - `on-existing`: *(Optional)* What to do if a BOM with the same name and version already exists on the server. Options are: 'error' (default behaviour), 'skip' or 'replace'.
 
@@ -63,8 +63,8 @@ jobs:
         uses: Weichwerke-Heidrich-Software/upload-bom-action@v0
         with:
           bom: './sbom.cdx.json'
-          name: 'Test'
-          version: '1.0.0'
+          name: '${{ github.event.repository.name }}' # If you want to use the repository name.
+          version: './version.txt' # The input can be a filename.
           tlp: 'amber'
           on-existing: 'error'
 ```

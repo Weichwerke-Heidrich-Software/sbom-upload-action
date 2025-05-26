@@ -17,6 +17,7 @@ jobs:
           echo "This is merely to avoid conflicts with other, parallel runs of this workflow."
           sed -z 's/\s*$//' ./version.txt > ./version_plus_os.txt
           echo "-${{ matrix.os }}" >> ./version_plus_os.txt
+        shell: bash
 
       - name: Creating SBOM
         uses: anchore/sbom-action@v0
@@ -64,5 +65,5 @@ jobs:
 
       - name: Cleanup (delete freshly uploaded SBOM #sad #nothinglastsforever)
         run: |
-          bomnipotent_client bom delete '${{ github.event.repository.name }}-test-project' '1.0.0-${{ matrix.os }}'
+          bomnipotent_client bom delete '${{ github.event.repository.name }}-test-project' "$(cat ./version_plus_os.txt)"
         shell: bash
