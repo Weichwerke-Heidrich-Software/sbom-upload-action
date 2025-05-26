@@ -21,6 +21,8 @@ fi
 
 This action requires `bomnipotent_client` or `bomnipotent_client.exe` to be available in PATH. The most straightforward way to achieve this in the pipeline is the [Setup BOMnipotent Client GitHub Action](https://github.com/marketplace/actions/setup-bomnipotent-client).
 
+It also requires an instance of BOMnipotent Server, and the credentials for a [robot user](https://doc.bomnipotent.de/client/basics/account-creation/index.html#requesting-a-robot-account) with [BOM_MANAGEMENT](https://doc.bomnipotent.de/client/manager/access-management/permissions/index.html) permissions.
+
 ### Inputs
 
 - `bom`: The filepath to the Bill of Materials (BOM) file to upload.
@@ -44,7 +46,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Create an SBOM using Syft
+      - name: Create an SBOM using Syft (or any other tool that creates CycloneDX files)
         uses: anchore/sbom-action@v0
         with:
           file: './test_project/Cargo.lock'
