@@ -12,11 +12,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Add OS to version file
+      - name: Generate unique version file (to avoid conflicts with other runs)
         run: |
-          echo "This is merely to avoid conflicts with other, parallel runs of this workflow."
-          printf "%s" "$(cat ./version.txt)" > ./version_plus_os.txt
-          echo "-${{ matrix.os }}" >> ./version_plus_os.txt
+          echo "${{ matrix.os }}-${{ github.run_id }}" > ./unique_version.txt
+          echo "Generated version:"
+          cat ./unique_version.txt
         shell: bash
 
       - name: Creating SBOM
@@ -41,16 +41,16 @@ jobs:
         with:
           bom: './sbom.cdx.json'
           name: '${{ github.event.repository.name }}-test-project'
-          version: './version_plus_os.txt'
+          version: './unique_version.txt'
           tlp: 'white'
           on-existing: 'replace' # Mainly to catch the case where a previous test run failed mid-way.
 
-      - name: Trying to uploade same SBOM again
+      - name: Trying to upload same SBOM again
         uses: Weichwerke-Heidrich-Software/upload-bom-action@v0
         with:
           bom: './sbom.cdx.json'
           name: '${{ github.event.repository.name }}-test-project'
-          version: './version_plus_os.txt'
+          version: './unique_version.txt'
           tlp: 'white'
           on-existing: 'skip'
 
@@ -59,11 +59,11 @@ jobs:
         with:
           bom: './test_project/static_bom.cdx.json' # Checked into this repo.
           name: '${{ github.event.repository.name }}-test-project'
-          version: './version_plus_os.txt'
+          version: './unique_version.txt'
           tlp: 'white'
           on-existing: 'replace'
 
       - name: Cleanup (delete freshly uploaded SBOM)
         run: |
-          bomnipotent_client bom delete '${{ github.event.repository.name }}-test-project' "$(cat ./version_plus_os.txt)"
+          bomnipotent_client bom delete '${{ github.event.repository.name }}-test-project' "$(cat ./unique_version.txt)"
         shell: bash

@@ -97,6 +97,7 @@ if [ "$already_exists" -eq 1 ]; then
         echo "Skipping upload: BOM with name '$name' and version '$version' already exists."
         exit 0
     elif [ "$on_existing" == "replace" ]; then
+        echo "Deleting existing BOM with name '$name' and version '$version' to replace it in a later step."
         "$bomnipotent_command" bom delete "$name" "$version"
     else
         echo "Error: BOM with name '$name' and version '$version' already exists."
@@ -110,4 +111,5 @@ args=(bom upload "$bom_file")
 [ -n "$version" ] && args+=(--version-overwrite "$version")
 [ -n "$tlp" ] && args+=(--tlp "$tlp")
 
+echo "Calling BOMnipotent with args ${args[*]}"
 "$bomnipotent_command" "${args[@]}"
