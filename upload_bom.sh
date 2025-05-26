@@ -76,7 +76,7 @@ fi
 already_exists=0
 if [ "$on_existing" != "error" ]; then
     if [ -n "$name" ] && [ -n "$version" ]; then
-        code=$("$bomnipotent_command" --output-mode code bom get "$name" "$version")
+        code=$("$bomnipotent_command" --output-mode code bom get "$name" "$version" || true)
         already_exists=$([ "$code" = "200" ] && echo 1 || echo 0)
     else
         echo "Warning: --on-existing handling currently requires --name and --version to be set."
