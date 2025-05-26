@@ -45,7 +45,7 @@ runs:
         if [ -n "${{ inputs.on-existing }}" ]; then
           args+=("--on-existing=${{ inputs.on-existing }}")
         fi
-        ./upload_bom.sh "${{ inputs.bom }}" "${args[@]}"
+        upload_bom.sh "${{ inputs.bom }}" "${args[@]}"
       shell: bash
 branding:
   icon: 'triangle'
