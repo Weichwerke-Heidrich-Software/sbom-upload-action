@@ -37,7 +37,10 @@ It also requires an instance of BOMnipotent Server, and the credentials for a [r
 
 name: Example Workflow
 
-on: [push]
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+' # Trigger when a version tag is pushed.
 
 jobs:
   install:
@@ -66,7 +69,8 @@ jobs:
         with:
           bom: './sbom.cdx.json'
           name: '${{ github.event.repository.name }}' # If you want to use the repository name.
-          version: './version.txt' # The input can be a filename.
+          version: '${{ github.ref_name }}' # Use the triggering tag as the version.
+          # version: './version.txt' # The input can instead also be a filename.
           tlp: 'amber'
           on-existing: 'error'
 ```
