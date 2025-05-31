@@ -12,7 +12,12 @@ if [ ! -f ./upload_bom.sh ]; then
     curl https://raw.githubusercontent.com/Weichwerke-Heidrich-Software/upload-bom-action/refs/heads/main/upload_bom.sh > ./upload_bom.sh
     chmod +x ./upload_bom.sh
 fi
-./upload_bom <args...>
+./upload_bom.sh <bom.cdx.json> <optional args...>
+```
+
+The script takes the same arguments as the action does, except that the bom argument is positional, and that optional arguments need to be prefixed with a double hyphen:
+```
+./upload_bom.sh ./bom.cdx.json --name <product-name> --version <product-version> --tlp amber
 ```
 
 ## Getting Started
