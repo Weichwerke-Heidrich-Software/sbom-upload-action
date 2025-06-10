@@ -82,34 +82,11 @@ if [ -f "$version" ]; then
     version=$(head -n 1 "$version" | head -c 256)
 fi
 
-already_exists=0
-if [ "$on_existing" != "error" ]; then
-    if [ -n "$name" ] && [ -n "$version" ]; then
-        code=$("$bomnipotent_command" --output-mode code bom get "$name" "$version" || true)
-        already_exists=$([ "$code" = "200" ] && echo 1 || echo 0)
-    else
-        echo "Warning: --on-existing handling currently requires --name and --version to be set."
-        echo "Weichwerke Heidrich Software is working on a cleaner solution."
-    fi
-fi
-if [ "$already_exists" -eq 1 ]; then
-    if [ "$on_existing" == "skip" ]; then
-        echo "Skipping upload: BOM with name '$name' and version '$version' already exists."
-        exit 0
-    elif [ "$on_existing" == "replace" ]; then
-        echo "Deleting existing BOM with name '$name' and version '$version' to replace it in a later step."
-        "$bomnipotent_command" bom delete "$name" "$version"
-    else
-        echo "Error: BOM with name '$name' and version '$version' already exists."
-        exit 1
-    fi
-fi
-
-
 args=(bom upload "$bom_file")
 [ -n "$name" ] && args+=(--name-overwrite "$name")
 [ -n "$version" ] && args+=(--version-overwrite "$version")
 [ -n "$tlp" ] && args+=(--tlp "$tlp")
+[ -n "$on_existing" ] && args+=(--on-existing "$on_existing")
 
 echo "Calling BOMnipotent with args ${args[*]}"
 "$bomnipotent_command" "${args[@]}"
