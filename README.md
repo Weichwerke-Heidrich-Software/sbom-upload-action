@@ -72,7 +72,7 @@ jobs:
           secret-key: ${{ secrets.CLIENT_SECRET_KEY }} # You need to set this up in your action repository secrets.
 
       - name: Upload SBOM
-        uses: Weichwerke-Heidrich-Software/upload-bom-action@v0
+        uses: Weichwerke-Heidrich-Software/upload-bom-action@v1
         with:
           bom: './sbom.cdx.json'
           name: '${{ github.event.repository.name }}' # If you want to use the repository name.
