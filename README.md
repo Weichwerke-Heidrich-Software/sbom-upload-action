@@ -26,6 +26,8 @@ The script takes the same arguments as the action does, except that the bom argu
 
 This action requires `bomnipotent_client` or `bomnipotent_client.exe` to be available in PATH. The most straightforward way to achieve this in the pipeline is the [Setup BOMnipotent Client GitHub Action](https://github.com/marketplace/actions/setup-bomnipotent-client).
 
+> The client needs to have version 0.6.1 or higher.
+
 It also requires an instance of BOMnipotent Server, and the credentials for a [robot user](https://doc.bomnipotent.de/client/basics/account-creation/index.html#requesting-a-robot-account) with [BOM_MANAGEMENT](https://doc.bomnipotent.de/client/manager/access-management/permissions/index.html) permissions.
 
 ### Inputs
@@ -70,7 +72,7 @@ jobs:
           secret-key: ${{ secrets.CLIENT_SECRET_KEY }} # You need to set this up in your action repository secrets.
 
       - name: Upload SBOM
-        uses: Weichwerke-Heidrich-Software/upload-bom-action@v0
+        uses: Weichwerke-Heidrich-Software/upload-bom-action@v1
         with:
           bom: './sbom.cdx.json'
           name: '${{ github.event.repository.name }}' # If you want to use the repository name.
